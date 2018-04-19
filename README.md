@@ -252,61 +252,61 @@
 
   - [3.6](#3.6) <a name="3.6"></a> 只在無效的屬性加上引號。eslint: [`quote-props`](http://eslint.org/docs/rules/quote-props.html) jscs: [`disallowQuotedKeysInObjects`](http://jscs.info/rule/disallowQuotedKeysInObjects)
 
-  > 為什麼？整體來說，我們認為這在主觀上更容易閱讀。它會改善語法高亮，也能讓多數的 JS 引擎更容易最優化。
+    > 為什麼？整體來說，我們認為這在主觀上更容易閱讀。它會改善語法高亮，也能讓多數的 JS 引擎更容易最優化。
 
-  ```javascript
-  // bad
-  const bad = {
-    'foo': 3,
-    'bar': 4,
-    'data-blah': 5,
-  };
+    ```javascript
+    // bad
+    const bad = {
+      'foo': 3,
+      'bar': 4,
+      'data-blah': 5,
+    };
 
-  // good
-  const good = {
-    foo: 3,
-    bar: 4,
-    'data-blah': 5,
-  };
-  ```
+    // good
+    const good = {
+      foo: 3,
+      bar: 4,
+      'data-blah': 5,
+    };
+    ```
 
   - [*3.7](#3.7) <a name="3.7"></a> 不要直接使用 `Object.prototype` 下的方法，如 `hasOwnProperty` ， `propertyIsEnumerable`和`isPrototypeOf`。(todo)
 
-  > 為什麼？考慮如下情況： `{ hasOwnProperty: false }` 或是一個為null的物件(`Object.create(null)`)。在這些情況下，這些方法都不會正常的執行。
+    > 為什麼？考慮如下情況： `{ hasOwnProperty: false }` 或是一個為null的物件(`Object.create(null)`)。在這些情況下，這些方法都不會正常的執行。
 
-  ```javascript
-  //bad
-  console.log(object.hasOwnProperty(key));
+    ```javascript
+    //bad
+    console.log(object.hasOwnProperty(key));
 
-  //good
-  console.log(Object.prototype.hasOwnProperty.call(object, key));
+    //good
+    console.log(Object.prototype.hasOwnProperty.call(object, key));
 
-  //best
-  const has = Object.prototype.hasOwnProperty; //cache the lookup once, in module scope/
-  /*or*/
-  import has from 'has'; //https://www.npmjs.com/package/has
-  // ...
-  console.log(has.call(object, key));
-  ```
+    //best
+    const has = Object.prototype.hasOwnProperty; //cache the lookup once, in module scope/
+    /*or*/
+    import has from 'has'; //https://www.npmjs.com/package/has
+    // ...
+    console.log(has.call(object, key));
+    ```
 
   - [3.8](#3.8) <a name="3.8"></a> 相比 `Object.assign` 更推薦用物件擴展運算子(spread operator)來對物件進行淺拷貝(shallow-copy)。結合剩餘運算子(rest operator)和要省去的屬性名來獲取新的物件。
 
-  ```javascript
-  // very bad
-  const original = { a: 1, b: 2 };
-  const copy = Object.assign(original, { c: 3 }); // this mutates `original` ಠ_ಠ
-  delete copy.a; //so does this
+    ```javascript
+    // very bad
+    const original = { a: 1, b: 2 };
+    const copy = Object.assign(original, { c: 3 }); // this mutates `original` ಠ_ಠ
+    delete copy.a; //so does this
 
-  //bad
-  const original = { a: 1, b: 2 };
-  const copy = Object.assign({}, original, { c: 3 }); //copy => { a: 1, b: 2, c: 3 }
+    //bad
+    const original = { a: 1, b: 2 };
+    const copy = Object.assign({}, original, { c: 3 }); //copy => { a: 1, b: 2, c: 3 }
 
-  //good
-  const original = { a: 1, b: 2 };
-  const copy = { ...original, c: 3 }; // copy => { a: 1, b: 2, c: 3 }
+    //good
+    const original = { a: 1, b: 2 };
+    const copy = { ...original, c: 3 }; // copy => { a: 1, b: 2, c: 3 }
 
-  const { a, ...noA } = copy; // noA => { b: 2, c: 3 }
-  ```
+    const { a, ...noA } = copy; // noA => { b: 2, c: 3 }
+    ```
 
 **[⬆ 回到頂端](#table-of-contents)**
 
@@ -757,7 +757,7 @@
 
   - [7.13](#7.13) <a name='7.13'></a> 切勿重新賦值給參數。eslint: [`no-param-reassign`](http://eslint.org/docs/rules/no-param-reassign.html)
 
-  > 為什麼？將參數重新賦值可能導致意外的行為，尤其在存取 `arguments` 物件時。它可能會引起最佳化的問題，尤其在 V8。
+    > 為什麼？將參數重新賦值可能導致意外的行為，尤其在存取 `arguments` 物件時。它可能會引起最佳化的問題，尤其在 V8。
 
     ```javascript
     // bad
@@ -1768,46 +1768,46 @@
 
   - [15.5](#15.5) <a name='15.5'></a> 若 `case` 與 `default` 包含了宣告語法（例如：`let`、`const`、`function` 及 `class`）時使用大括號來建立區塊。eslint: [`no-case-declarations`](https://eslint.org/docs/rules/no-case-declarations.html)
 
-  > 為什麼？宣告語法可以在整個 `switch` 區塊中可見，但是只在進入該 `case` 時初始化。當多個 `case` 語法時會導致嘗試定義相同事情的問題。
+    > 為什麼？宣告語法可以在整個 `switch` 區塊中可見，但是只在進入該 `case` 時初始化。當多個 `case` 語法時會導致嘗試定義相同事情的問題。
 
-  ```javascript
-  // bad
-  switch (foo) {
-    case 1:
-      let x = 1;
-      break;
-    case 2:
-      const y = 2;
-      break;
-    case 3:
-      function f() {}
-      break;
-    default:
-      class C {}
-  }
+    ```javascript
+    // bad
+    switch (foo) {
+      case 1:
+        let x = 1;
+        break;
+      case 2:
+        const y = 2;
+        break;
+      case 3:
+        function f() {}
+        break;
+      default:
+        class C {}
+    }
 
-  // good
-  switch (foo) {
-    case 1: {
-      let x = 1;
-      break;
+    // good
+    switch (foo) {
+      case 1: {
+        let x = 1;
+        break;
+      }
+      case 2: {
+        const y = 2;
+        break;
+      }
+      case 3: {
+        function f() {}
+        break;
+      }
+      case 4:
+        bar();
+        break;
+      default: {
+        class C {}
+      }
     }
-    case 2: {
-      const y = 2;
-      break;
-    }
-    case 3: {
-      function f() {}
-      break;
-    }
-    case 4:
-      bar();
-      break;
-    default: {
-      class C {}
-    }
-  }
-  ```
+    ```
 
   - [15.6](#15.6) <a name='15.6'></a> 不應該使用巢狀的三元運算子，且通常應該使用單行來表示。eslint: [`no-nested-ternary`](https://eslint.org/docs/rules/no-nested-ternary.html)
 
