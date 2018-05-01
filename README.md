@@ -58,7 +58,7 @@
   1. [部分詞彙翻譯對照](#translation)
 
 <a name="types"></a>
-## 資料型態
+## 資料型態(Types)
 
   - [1.1](#1.1) <a name='1.1'></a> **基本**：你可以直接存取基本資料型態。
 
@@ -77,6 +77,7 @@
 
     console.log(foo, bar); // => 1, 9
     ```
+    
     +  不建議在目標瀏覽器/環境不支持es6的情況下使用符號(symbol)。現階段不能通過polyfill的方式使符號受到原生的支持。
   - [1.2](#1.2) <a name='1.2'></a> **複合**：你需要透過引用的方式存取複合資料型態。
 
@@ -96,11 +97,11 @@
 **[⬆ 回到頂端](#table-of-contents)**
 
 <a name="references"></a>
-## 參考
+## 參考(References)
 
   - [2.1](#2.1) <a name='2.1'></a> 對於所有的參考使用 `const`；避免使用 `var`。eslint: [`prefer-const`](http://eslint.org/docs/rules/prefer-const.html), [`no-const-assign`](http://eslint.org/docs/rules/no-const-assign.html)
 
-    > 為什麼？因為這能確保你無法對參考重新賦值，也不會讓你的程式碼有錯誤或難以理解。
+    > 為什麼？因為這能確保你無法對參考重新賦值(reassign)，得以不讓你的程式碼有錯誤或難以理解。
 
     ```javascript
     // bad
@@ -112,8 +113,7 @@
     const b = 2;
     ```
 
-  - [2.2](#2.2) <a name='2.2'></a> 如果你需要可變動的參考，使用 `let` 代替 `var`。eslint: [`no-var`](http://eslint.org/docs/rules/no-var.html) jscs: [`disallowVar`](http://jscs.info/rule/disallowVar)
-
+  - [2.2](#2.2) <a name='2.2'></a> 如果你需要可變動的參考，使用 `let` 代替 `var`。eslint: [`no-var`](http://eslint.org/docs/rules/no-var.html)
     > 為什麼？因為 `let` 的作用域是在區塊內，而不像 `var` 是在函式內。
 
     ```javascript
@@ -147,7 +147,7 @@
 <a name="objects"></a>
 ## 物件
 
-  - [3.1](#3.1) <a name='3.1'></a> 使用[字面值語法(literal syntax)](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Grammar_and_types)建立物件。eslint rules: [`no-new-object`](http://eslint.org/docs/rules/no-new-object.html).
+  - [3.1](#3.1) <a name='3.1'></a> 使用[字面值語法(literal syntax)](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Grammar_and_types)建立物件。eslint: [`no-new-object`](http://eslint.org/docs/rules/no-new-object.html).
 
     ```javascript
     // bad
@@ -160,10 +160,9 @@
   <a name='es6-computed-properties'></a>
   - [3.2](#3.2) <a name='3.2'></a> 建立具有動態屬性名稱的物件時請使用可被計算的屬性名稱。
 
-    > 為什麼？因為這樣能夠讓你在同一個地方定義所有的物件屬性。
+    > 為什麼？因為這樣能夠讓你在同一個地方定義一個物件所有的物件屬性。
 
     ```javascript
-
     function getKey(k) {
       return `a key named ${k}`;
     }
@@ -225,9 +224,9 @@
     };
     ```
 
-  - [3.5](#3.5) <a name='3.5'></a> 請在物件宣告的開頭將簡寫的屬性分成一組寫上。
+  - [3.5](#3.5) <a name='3.5'></a> 將簡寫的屬性分成一組，放在物件宣告的開頭部分。
 
-    > 為什麼？因為這樣能夠很簡單的看出哪些屬性是使用簡寫。
+    > 為什麼？因為這樣能夠很容易的看出哪些屬性使用了簡寫。
 
     ```javascript
     const anakinSkywalker = 'Anakin Skywalker';
@@ -254,8 +253,7 @@
     };
     ```
 
-  - [3.6](#3.6) <a name="3.6"></a> 只在無效的屬性加上引號。eslint: [`quote-props`](http://eslint.org/docs/rules/quote-props.html) jscs: [`disallowQuotedKeysInObjects`](http://jscs.info/rule/disallowQuotedKeysInObjects)
-
+  - [3.6](#3.6) <a name="3.6"></a> 只在無效的屬性加上引號。eslint: [`quote-props`](http://eslint.org/docs/rules/quote-props.html)
     > 為什麼？整體來說，我們認為這在主觀上更容易閱讀。它會改善語法高亮，也能讓多數的 JS 引擎更容易最優化。
 
     ```javascript
@@ -293,7 +291,7 @@
     console.log(has.call(object, key));
     ```
 
-  - [3.8](#3.8) <a name="3.8"></a> 相比 `Object.assign` 更推薦用物件擴展運算子(spread operator)來對物件進行淺拷貝(shallow-copy)。結合剩餘運算子(rest operator)和要省去的屬性名來獲取新的物件。
+  - [3.8](#3.8) <a name="3.8"></a> 相比 `Object.assign` 更推薦用物件的擴展運算子(spread operator)來對物件進行淺拷貝(shallow-copy)。使用物件的剩餘運算子(rest operator)省略確切的屬性名來獲取新的物件。
 
     ```javascript
     // very bad
@@ -327,7 +325,7 @@
     const items = [];
     ```
 
-  - [4.2](#4.2) <a name='4.2'></a> 要向陣列增加東西時間，使用[Array#push](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/push)來取代直接操作陣列
+  - [4.2](#4.2) <a name='4.2'></a> 要向陣列增加元素時，使用[Array#push](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/push)來取代直接操作陣列
 
     ```javascript
     const someStack = [];
@@ -367,7 +365,7 @@
     const nodes = [...foo];
     ```
 
-  - [4.5](#4.5) <a name='4.5'></a> 如果需要用回呼函式來處理整個迭代器(map)，使用[Array.from](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/from)來取代擴展運算子 `...`。因為它能夠避免再多弄出一個中間陣列。
+  - [4.5](#4.5) <a name='4.5'></a> 如果需要用回呼函式來處理整個迭代器(mapping over iterables)，使用 [Array.from](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/from) 來取代擴展運算子 `...`。因為它能夠避免再多弄出一個中間陣列。
 
     ```javascript
     // bad
@@ -430,7 +428,7 @@
 <a name="destructuring"></a>
 ## 解構子
 
-  - [5.1](#5.1) <a name='5.1'></a> 存取或使用多屬性的物件時，請使用物件解構子。eslint: [`prefer-destructuring`](https://eslint.org/docs/rules/prefer-destructuring)
+  - [5.1](#5.1) <a name='5.1'></a> 存取或使用有多個屬性的物件時，請使用物件解構子。eslint: [`prefer-destructuring`](https://eslint.org/docs/rules/prefer-destructuring)
 
     > 為什麼？因為解構子能夠節省你對這些屬性建立暫時的參考。
 
@@ -511,7 +509,7 @@
   <a name='strings--line-length'></a>
   - [6.2](#6.2) <a name='6.2'></a> 如果字串超過 100 個字元，請使用字串連接符號換行。
 
-    > 為什麼？處理割裂開的字串讓人很痛苦，且會降低程式的可搜索性
+    > 為什麼？處理割裂開的字串讓人很痛苦，而且會降低程式的可搜索性
 
     ```javascript
     // bad
@@ -530,9 +528,9 @@
     ```
 
   <a name='es6-template-literals'></a>
-  - [6.3](#6.3) <a name='6.3'></a> 當以程式方式建構字串時，請使用模板字串而不是字串連接。eslint: [`prefer-template`](http://eslint.org/docs/rules/prefer-template.html) [`template-curly-spacing`](http://eslint.org/docs/rules/template-curly-spacing)
+  - [6.3](#6.3) <a name='6.3'></a> 當以程式方式建構字串時，請使用模板字串而不是連接字串。eslint: [`prefer-template`](http://eslint.org/docs/rules/prefer-template.html) [`template-curly-spacing`](http://eslint.org/docs/rules/template-curly-spacing)
 
-    > 為什麼？因為模板字串更有可讀性，正確的換行符號及字串插值功能讓語法更簡潔。
+    > 為什麼？因為模板字串更具有可讀性，正確的換行符號及字串插值功能讓語法更簡潔。
 
     ```javascript
     // bad
@@ -556,7 +554,7 @@
     }
     ```
 
-  - [6.4](#6.4) <a name='6.4'></a> 千萬不要在字串中使用 `eval()`，會造成許多的漏洞。eslint: [`no-eval`](https://eslint.org/docs/rules/no-eval)
+  - [6.4](#6.4) <a name='6.4'></a> 千萬不要在字串中使用 `eval()`，會帶來許多不安全因素。eslint: [`no-eval`](https://eslint.org/docs/rules/no-eval)
 
   - [6.5](#6.5) <a name='6.5'></a> 在字串中避免使用無意義的跳脫字元。eslint: [`no-useless-escape`](https://eslint.org/docs/rules/no-useless-escape)
 
@@ -3474,3 +3472,14 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **lookup**: 查詢
   - **cache**: 快取
   - **regression test**: 回歸測試
+  - **reassign**:
+  - **literal syntax**:
+  - **define**:
+  - **declaration**: 宣告
+  - **identifiers**: 識別字
+  - **spread operator**:
+  - **shallow-copy**: 淺拷貝
+  - **rest operator**: 
+  - **copy**：
+  - **build**:
+  - **escape characters**:
