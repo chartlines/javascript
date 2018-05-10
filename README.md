@@ -974,7 +974,7 @@
     ```
 
   <a name="whitespace--implicit-arrow-linebreak"></a>
-  - [8.6](#whitespace--implicit-arrow-linebreak) 當箭頭函式隱式調用return時，函式體需要用括號包起來。eslint: [`implicit-arrow-linebreak`](https://eslint.org/docs/rules/implicit-arrow-linebreak)
+  - [8.6](#whitespace--implicit-arrow-linebreak) 當箭頭函式隱式調用return時，函式體需要用括號包起來。eslint: [`implicit-arrow-linebreak`](https://eslint.org/docs/rules/implicit-arrow-linebreak)
 
     ```js
     // bad
@@ -2225,7 +2225,7 @@
 <a name="whitespace"></a>
 ## 空格
 
-  - [19.1](#98.1) <a name='19.1'></a> 將 Tab 設定為兩個空格。eslint: [`indent`](http://eslint.org/docs/rules/indent.html)
+  - [19.1](#19.1) <a name='19.1'></a> 將 Tab 設定為兩個空格。eslint: [`indent`](http://eslint.org/docs/rules/indent.html)
 
     ```javascript
     // bad
@@ -2534,7 +2534,7 @@
     ```
 
   <a name="whitespace--block-spacing"></a>
-  - [19.13](#whitespace--block-spacing) 區塊的前(後)大括號若與後(前)一句語句在同一行，中間需要插入空格。eslint: [`block-spacing`](https://eslint.org/docs/rules/block-spacing)
+  - [19.13](#whitespace--block-spacing) 區塊的前(後)大括號若與後(前)一句語句在同一行，中間需要插入空格。eslint: [`block-spacing`](https://eslint.org/docs/rules/block-spacing)
 
     ```js
     // bad
@@ -2575,7 +2575,7 @@
     ```
 
 <a name="whitespace--func-call-spacing"></a>
-- [19.16](#whitespace--func-call-spacing) 在函式名和它的調用之間不要留有空格。eslint: [`func-call-spacing`](https://eslint.org/docs/rules/func-call-spacing)
+- [19.16](#whitespace--func-call-spacing) 在函式名和它的調用之間不要留有空格。eslint: [`func-call-spacing`](https://eslint.org/docs/rules/func-call-spacing)
 
   ```js
   // bad
@@ -2589,7 +2589,7 @@
   ```
 
 <a name="whitespace--key-spacing"></a>
-- [19.17](#whitespace--key-spacing) 在物件的字面量語法中，物件的屬性值與屬性名的冒號間留有空格。eslint: [`key-spacing`](https://eslint.org/docs/rules/key-spacing)
+- [19.17](#whitespace--key-spacing) 在物件的字面量語法中，物件的屬性值與屬性名的冒號間留有空格。eslint: [`key-spacing`](https://eslint.org/docs/rules/key-spacing)
 
   ```js
   // bad
