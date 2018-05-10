@@ -353,7 +353,7 @@
     // good
     const itemsCopy = [...items];
     ```
-  - [4.4](#4.4) <a name='4.4'></a> 如果要轉換一個類陣列物件至陣列，可以使用擴展運算子 `...` 來取代 [Array.from](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/from)。
+  - [4.4](#4.4) <a name='4.4'></a> 如果要轉換一個類陣列物件至陣列，可以使用擴展運算子 `...` 來取代 [`Array.from`](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/from)。
 
     ```javascript
     const foo = document.querySelectorAll('.foo');
@@ -719,7 +719,7 @@
 
   - [7.10](#7.10) <a name='7.9'></a> 千萬別使用建構函式去建立一個新的函式。eslint: [`no-new-func`](https://eslint.org/docs/rules/no-new-func)
 
-    > 為什麼？透過這種方式建立一個函數來計算字串類似於 eval()，會造成許多的漏洞。
+    > 為什麼？透過這種方式建立一個函數來計算字串類似於 `eval()`，會造成許多的漏洞。
 
     ```javascript
     // bad
@@ -973,6 +973,24 @@
     };
     ```
 
+  <a name="whitespace--implicit-arrow-linebreak"></a>
+  - [8.6](#whitespace--implicit-arrow-linebreak) 當箭頭函式隱式調用return時，函式體需要用括號包起來。eslint: [`implicit-arrow-linebreak`](https://eslint.org/docs/rules/implicit-arrow-linebreak)
+
+    ```js
+    // bad
+    (foo) =>
+      bar;
+    (foo) =>
+      (bar);
+
+    // good
+    (foo) => bar;
+    (foo) => (bar);
+    (foo) => (
+       bar
+    )
+    ```
+
 **[⬆ 回到頂端](#table-of-contents)**
 
 <a name="constructors"></a>
@@ -1067,7 +1085,7 @@
     ```
 
 
-  - [9.4](#9.4) <a name='9.4'></a> 可以寫一個 toString() 的方法，但是請確保它可以正常執行且沒有函式副作用。
+  - [9.4](#9.4) <a name='9.4'></a> 可以寫一個 `toString()` 的方法，但是請確保它可以正常執行且沒有函式副作用。
 
     ```javascript
     class Jedi {
@@ -1564,7 +1582,7 @@
     // the same applies for `const`
     ```
 
-  - [13.6](#13.6) <a name='13.6'></a> 避免使用一元的自增自減符（++， --）。eslint: [`no-plusplus`](https://eslint.org/docs/rules/no-plusplus)
+  - [13.6](#13.6) <a name='13.6'></a> 避免使用一元的自增自減符( `++`， `--` )。eslint: [`no-plusplus`](https://eslint.org/docs/rules/no-plusplus)
 
     > 為什麼？Per the eslint documentation, unary increment and decrement statements are subject to automatic semicolon insertion and can cause silent errors with incrementing or decrementing values within an application. It is also more expressive to mutate your values with statements like `num += 1` instead of `num++` or `num ++`. Disallowing unary increment and decrement statements also prevents you from pre-incrementing/pre-decrementing values unintentionally which can also cause unexpected behavior in your programs.
 
@@ -2515,6 +2533,93 @@
       .fail(() => console.log('You have failed this city.'));
     ```
 
+  <a name="whitespace--block-spacing"></a>
+  - [19.13](#whitespace--block-spacing) 區塊的前(後)大括號若與後(前)一句語句在同一行，中間需要插入空格。eslint: [`block-spacing`](https://eslint.org/docs/rules/block-spacing)
+
+    ```js
+    // bad
+    function foo() {return true;}
+    if (foo) { bar = 0;}
+
+    // good
+    function foo() { return true; }
+    if (foo) { bar = 0; }
+    ```
+
+  <a name="whitespace--comma-spacing"></a>
+  - [19.14](#whitespace--comma-spacing) 在逗號前避免留有空格，在逗號後請留空格。eslint: [`comma-spacing`](https://eslint.org/docs/rules/comma-spacing)
+
+    ```js
+    // bad
+    var foo = 1,bar = 2;
+    var arr = [1 , 2];
+    // good
+    var foo = 1, bar = 2;
+    var arr = [1, 2];
+    ```
+  
+  - [19.15](#whitespace--computed-property-spacing) 物件被方括號包裹的計算屬性名，與方括號之間不要留有空格。eslint: [`computed-property-spacing`](https://eslint.org/docs/rules/computed-property-spacing)
+
+    ```js
+    // bad
+    obj[foo ]
+    obj[ 'foo']
+    var x = {[ b ]: a}
+    obj[foo[ bar ]]
+
+    // good
+    obj[foo]
+    obj['foo']
+    var x = { [b]: a }
+    obj[foo[bar]]
+    ```
+
+<a name="whitespace--func-call-spacing"></a>
+- [19.16](#whitespace--func-call-spacing) 在函式名和它的調用之間不要留有空格。eslint: [`func-call-spacing`](https://eslint.org/docs/rules/func-call-spacing)
+
+  ```js
+  // bad
+  func ();
+
+  func
+  ();
+
+  // good
+  func();
+  ```
+
+<a name="whitespace--key-spacing"></a>
+- [19.17](#whitespace--key-spacing) 在物件的字面量語法中，物件的屬性值與屬性名的冒號間留有空格。eslint: [`key-spacing`](https://eslint.org/docs/rules/key-spacing)
+
+  ```js
+  // bad
+  var obj = { "foo" : 42 };
+  var obj2 = { "foo":42 };
+  // good
+  var obj = { "foo": 42 };
+  ```
+
+<a name="whitespace--no-trailing-spaces"></a>
+- [19.18](#whitespace--no-trailing-spaces) 在每一行的末尾不要留有空格。eslint: [`no-trailing-spaces`](https://eslint.org/docs/rules/no-trailing-spaces)
+
+<a name="whitespace--no-multiple-empty-lines"></a>
+- [19.19](#whitespace--no-multiple-empty-lines) 應避免多行空行，並在檔案的末尾留有一行空行。 eslint: [`no-multiple-empty-lines`](https://eslint.org/docs/rules/no-multiple-empty-lines)
+
+  ```js
+  // bad
+  var x = 1;
+
+
+
+  var y = 2;
+
+   // good
+  var x = 1;
+
+  var y = 2;
+  ```
+
+
 **[⬆ 回到頂端](#table-of-contents)**
 
 <a name="commas"></a>
@@ -3014,7 +3119,7 @@
 ## 存取器
 
   - [24.1](#24.1) <a name='24.1'></a> 屬性的存取器函式不是必須的。
-  - [24.2](#24.2) <a name='24.2'></a> 不要使用 JavaScript 的 getters 或 setters，因為它們會導致意想不到的副作用，而且不易於測試、維護以及進行推測。取而代之，如果你要建立一個存取器函式，請使用 getVal() 及 setVal('hello')。
+  - [24.2](#24.2) <a name='24.2'></a> 不要使用 JavaScript 的 getters 或 setters，因為它們會導致意想不到的副作用，而且不易於測試、維護以及進行推測。取而代之，如果你要建立一個存取器函式，請使用 `getVal()` 及 `setVal('hello')`。
 
     ```javascript
     // bad
@@ -3054,7 +3159,7 @@
     }
     ```
 
-  - [24.4](#24.4) <a name='24.4'></a> 可以建立 get() 及 set() 函式，但請保持一致。
+  - [24.4](#24.4) <a name='24.4'></a> 可以建立 `get()` 及 `set()` 函式，但請保持一致。
 
     ```javascript
     class Jedi {
