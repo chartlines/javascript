@@ -3571,21 +3571,61 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 We encourage you to fork this guide and change the rules to fit your team's style guide. Below, you may list some amendments to the style guide. This allows you to periodically update your style guide without having to deal with merge conflicts.
 
 <a name="translation"></a>
-## 部分詞彙翻譯對照
-  - **reference**: 引用
-  - **operator**: 運算子
-  - **file**: 檔案
-  - **lookup**: 查詢
-  - **cache**: 快取
-  - **regression test**: 回歸測試
-  - **reassign**:
-  - **literal syntax**:
-  - **define**:
-  - **declaration**: 宣告
-  - **identifiers**: 識別字
-  - **spread operator**:
-  - **shallow-copy**: 淺拷貝
-  - **rest operator**: 
-  - **copy**：
+## 部分詞彙翻譯對照(大部分詞彙參照JavaScript大全(O'REILLY))
+
+  - **argument**: 引數
+  - **arrays**: 陣列
+  - **assign**: 指定
   - **build**:
-  - **escape characters**:
+  - **cache**: 快取
+  - **call**: 呼叫
+  - **character set**: 字元集
+  - **class**: 類別
+  - **copy**：複製
+  - **comments**: 註解
+  - **conditionals**: 條件句
+  - **constructors**: 建構式
+  - **declare**: 宣告
+  - **define**: 定義
+  - **escape characters**: 轉譯字元(跳脫字元)
+  - **expression**: 運算式 
+  - **file**: 檔案
+  - **function**: 函式
+  - **global**: 全域
+  - **hoisting**: 提升
+  - **identifiers**: 識別字
+  - **implicit**: 隱含的
+  - **instance**: 實體
+  - **iteration**: 迭代
+  - **interpreter**: 直譯器
+  - **invoke**: 調用
+  - **literal syntax**: 字面值語法
+  - **lookup**: 查詢(查對)
+  - **loop**: 迴圈
+  - **map**: 映射
+  - **mutable**: 可變
+  - **nested**: 嵌套
+  - **numeric**: 數值
+  - **object**: 物件
+  - **operator**: 運算子
+  - **parameter**: 參數
+  - **parse**: 解析
+  - **pattern matching**: 範式對比
+  - **plugin**: 套件
+  - **properties**: 特性
+  - **prototype chain**: 原型鏈
+  - **reassign**:
+  - **reference**: 參考
+  - **regression test**: 回歸測試
+  - **regular expressions**: 正規運算式
+  - **rest operator**: 
+  - **return**: 回傳
+  - **runtime**: 執行期
+  - **scope**: 範疇
+  - **shallow-copy**: 淺拷貝
+  - **spread operator**:
+  - **statements**: 述句
+  - **superset**: 超集
+  - **types**: 型別
+  - **values**: 運算值
+  - **variable**: 變數
