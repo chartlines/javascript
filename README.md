@@ -3576,15 +3576,15 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **argument**: 引數
   - **arrays**: 陣列
   - **assign**: 指定
-  - **build**:
+  - **build**: 指派(指定)
   - **cache**: 快取
   - **call**: 呼叫
   - **character set**: 字元集
   - **class**: 類別
   - **copy**：複製
   - **comments**: 註解
-  - **conditionals**: 條件句
-  - **constructors**: 建構式
+  - **conditionals**: 條件式
+  - **constructors**: 建構子
   - **declare**: 宣告
   - **define**: 定義
   - **escape characters**: 轉譯字元(跳脫字元)
@@ -3594,7 +3594,7 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **global**: 全域
   - **hoisting**: 提升
   - **identifiers**: 識別字
-  - **implicit**: 隱含的
+  - **implicit**: 隱性(隱含的)
   - **instance**: 實體
   - **iteration**: 迭代
   - **interpreter**: 直譯器
@@ -3604,28 +3604,29 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **loop**: 迴圈
   - **map**: 映射
   - **mutable**: 可變
-  - **nested**: 嵌套
+  - **nested**: 嵌套(巢套)
   - **numeric**: 數值
   - **object**: 物件
   - **operator**: 運算子
+  - **package**: 套件
   - **parameter**: 參數
   - **parse**: 解析
-  - **pattern matching**: 範式對比
-  - **plugin**: 套件
-  - **properties**: 特性
+  - **pattern matching**: 範式對比(正規比對)
+  - **plugin**: 外掛(插件)
+  - **properties**: 屬性(特性)
   - **prototype chain**: 原型鏈
-  - **reassign**:
+  - **reassign**: 重新指派(再指派)
   - **reference**: 參考
   - **regression test**: 回歸測試
   - **regular expressions**: 正規運算式
-  - **rest operator**: 
+  - **rest operator**: 其餘運算子
   - **return**: 回傳
   - **runtime**: 執行期
   - **scope**: 範疇
   - **shallow-copy**: 淺拷貝
-  - **spread operator**:
-  - **statements**: 述句
+  - **spread operator**: 展開運算子
+  - **statements**: 述句(陳述句)
   - **superset**: 超集
   - **types**: 型別
-  - **values**: 運算值
+  - **values**: 運算值(值)
   - **variable**: 變數
