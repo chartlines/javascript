@@ -3599,7 +3599,7 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **iteration**: 迭代
   - **interpreter**: 直譯器
   - **invoke**: 調用
-  - **literal syntax**: 字面值語法
+  - **literal syntax**: 字面值語法(實字語法)
   - **lookup**: 查詢(查對)
   - **loop**: 迴圈
   - **map**: 映射
