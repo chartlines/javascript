@@ -3576,7 +3576,7 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **argument**: 引數
   - **arrays**: 陣列
   - **assign**: 指定
-  - **build**: 指派(指定)
+  - **build**: 建置
   - **cache**: 快取
   - **call**: 呼叫
   - **character set**: 字元集
@@ -3613,6 +3613,7 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **parse**: 解析
   - **pattern matching**: 範式對比(正規比對)
   - **plugin**: 外掛(插件)
+  - **processes**: 行程(進程)
   - **properties**: 屬性(特性)
   - **prototype chain**: 原型鏈
   - **reassign**: 重新指派(再指派)
@@ -3627,6 +3628,7 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **spread operator**: 展開運算子
   - **statements**: 述句(陳述句)
   - **superset**: 超集
+  - **thread**: 執行緒(線程)
   - **types**: 型別
   - **values**: 運算值(值)
   - **variable**: 變數
