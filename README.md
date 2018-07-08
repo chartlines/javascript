@@ -3588,7 +3588,7 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **declare**: 宣告
   - **define**: 定義
   - **escape characters**: 轉譯字元(跳脫字元)
-  - **expression**: 運算式 
+  - **expression**: 運算式
   - **file**: 檔案
   - **function**: 函式
   - **global**: 全域
@@ -3603,6 +3603,7 @@ We encourage you to fork this guide and change the rules to fit your team's styl
   - **lookup**: 查詢(查對)
   - **loop**: 迴圈
   - **map**: 映射
+  - **module**: 模組
   - **mutable**: 可變
   - **nested**: 嵌套(巢套)
   - **numeric**: 數值
