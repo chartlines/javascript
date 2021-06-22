@@ -9,6 +9,7 @@
  - [ES5](es5/)
  - [React](react/)
  - [CSS & Sass](https://github.com/airbnb/css)
+ - [CSS-in-JavaScript](https://github.com/airbnb/javascript/tree/master/css-in-javascript)
  - [Ruby](https://github.com/airbnb/ruby)
 
 翻譯自 [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) 。
@@ -24,7 +25,7 @@
   1. [字串](#strings)
   1. [函式](#functions)
   1. [箭頭函式](#arrow-functions)
-  1. [建構子](#constructors)
+  1. [類別及建構子](#classes--constructors)
   1. [模組](#modules)
   1. [迭代器及產生器](#iterators-and-generators)
   1. [屬性](#properties)
@@ -68,6 +69,7 @@
     + `null`
     + `undefined`
     + `符號(symbol)`
+    + `bigint`
 
     ```javascript
     const foo = 1;
@@ -77,8 +79,8 @@
 
     console.log(foo, bar); // => 1, 9
     ```
-    
-    +  不建議在目標瀏覽器/環境不支持es6的情況下使用符號(symbol)。現階段不能通過polyfill的方式使符號受到原生的支持。
+
+    +  不建議在目標瀏覽器/環境不支持es6的情況下使用符號(symbol)及Bigint。現階段不能通過polyfill的方式使符號和Bigint受到原生的支持。
   - [1.2](#1.2) <a name='1.2'></a> **複合**：你需要透過引用的方式存取複合資料型態。
 
     + `物件`
@@ -130,17 +132,21 @@
     }
     ```
 
-  - [2.3](#2.3) <a name='2.3'></a> 請注意，`let` 與 `const` 的作用域都只在區塊內。
+  - [2.3](#2.3) <a name='2.3'></a> 請注意，`let` 與 `const` 都是區域作用域，而 `var` 是函式作用域。
 
     ```javascript
     // const 及 let 只存在於他們被定義的區塊內。
     {
       let a = 1;
       const b = 1;
+      var c = 1;
     }
     console.log(a); // ReferenceError
     console.log(b); // ReferenceError
+    console.log(c); // Prints 1
     ```
+
+    上示代碼，你會發現取得`a`和`b`產生了ReferenceError，然而`c`回傳了其數字值。這是因為`a`和`b`的作用域僅在區塊中，而`c`的作用域為包含它的整個函式。
 
 **[⬆ 回到頂端](#table-of-contents)**
 
@@ -272,7 +278,7 @@
     };
     ```
 
-  - [*3.7](#3.7) <a name="3.7"></a> 不要直接使用 `Object.prototype` 下的方法，如 `hasOwnProperty` ， `propertyIsEnumerable`和`isPrototypeOf`。(todo)
+  - [*3.7](#3.7) <a name="3.7"></a> 不要直接使用 `Object.prototype` 下的方法，如 `hasOwnProperty` ， `propertyIsEnumerable`和`isPrototypeOf`。eslint: [`no-prototype-builtins`](https://eslint.org/docs/rules/no-prototype-builtins)
 
     > 為什麼？考慮如下情況： `{ hasOwnProperty: false }` 或是一個為null的物件(`Object.create(null)`)。在這些情況下，這些方法都不會正常的執行。
 
@@ -285,13 +291,13 @@
 
     //best
     const has = Object.prototype.hasOwnProperty; //cache the lookup once, in module scope/
+    console.log(has.call(object, key));
     /*or*/
     import has from 'has'; //https://www.npmjs.com/package/has
-    // ...
     console.log(has.call(object, key));
     ```
 
-  - [3.8](#3.8) <a name="3.8"></a> 相比 `Object.assign` 更推薦用物件的擴展運算子(spread operator)來對物件進行淺拷貝(shallow-copy)。使用物件的剩餘運算子(rest operator)省略確切的屬性名來獲取新的物件。
+  - [3.8](#3.8) <a name="3.8"></a> 相比 [`Object.assign`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 更推薦用物件的擴展運算子(spread operator)來對物件進行淺拷貝(shallow-copy)。使用物件的剩餘運算子(rest operator)省略確切的屬性名來獲取新的物件。eslint: [`prefer-object-spread`](https://eslint.org/docs/rules/prefer-object-spread)
 
     ```javascript
     // very bad
@@ -353,7 +359,8 @@
     // good
     const itemsCopy = [...items];
     ```
-  - [4.4](#4.4) <a name='4.4'></a> 如果要轉換一個類陣列物件至陣列，可以使用擴展運算子 `...` 來取代 [`Array.from`](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/from)。
+
+  - [4.4](#4.4) <a name='4.4'></a> 如果要轉換一個可迭代物件至陣列，可以使用擴展運算子 `...` 來取代 [`Array.from`](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/from)。
 
     ```javascript
     const foo = document.querySelectorAll('.foo');
@@ -365,7 +372,19 @@
     const nodes = [...foo];
     ```
 
-  - [4.5](#4.5) <a name='4.5'></a> 如果需要用回呼函式來處理整個迭代器(mapping over iterables)，使用 [Array.from](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/from) 來取代擴展運算子 `...`。因為它能夠避免再多弄出一個中間陣列。
+  - [4.5](#4.5) <a name='4.5'></a> 如果要轉換一個類陣列物件至陣列，使用[`Array.from`](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/from)。
+
+    ```javascript
+    const arrLike = { 0: 'foo', 1: 'bar', 2: 'baz', length: 3 };
+
+    // bad
+    const arr = Array.prototype.slice.call(arrLike);
+
+    // good
+    const arr = Array.from(arrLike);
+    ```
+
+  - [4.6](#4.6) <a name='4.6'></a> 如果需要遍歷處理整個可迭代物件(mapping over iterables)，使用 [Array.from](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/from) 來取代擴展運算子 `...`。因為它能夠避免再多弄出一個中間陣列。
 
     ```javascript
     // bad
@@ -375,7 +394,7 @@
     const baz = Array.from(foo, bar);
     ```
 
-  - [4.6](#4.6) <a name='4.6'></a> 在用陣列的方法時方法要有回傳值(方法裡要有 return 宣告)。若函式本體是如 [8.2](#8.2) 的單一語法，那麼省略 return 是可以的(箭頭函式在某些情況，解釋器能幫你自動補上 return )。eslint: [`array-callback-return`](http://eslint.org/docs/rules/array-callback-return)
+  - [4.7](#4.7) <a name='4.7'></a> 在用陣列的方法時方法要有回傳值(方法裡要有 return 宣告)。若函式本體是如 [8.2](#8.2) 的單一語法，那麼省略 return 是可以的(箭頭函式在某些情況，解釋器能幫你自動補上 return )。eslint: [`array-callback-return`](http://eslint.org/docs/rules/array-callback-return)
 
     ```javascript
     // good
@@ -387,7 +406,8 @@
     // good
     [1, 2, 3].map(x => x + 1);
 
-    // bad
+    // bad - no returned value means `acc` becomes undefined after the first iteration
+    [[0, 1], [2, 3], [4, 5]].reduce((acc, item, index) => {
     const flat = {};
     [[0, 1], [2, 3], [4, 5]].reduce((memo, item, index) => {
       const flatten = memo.concat(item);
@@ -421,6 +441,42 @@
 
       return false;
     });
+    ```
+
+    - [4.8](#4.8) <a name='4.8'></a> 如果陣列不只一行，在陣列開頭和結尾的方括號處進行跳行處理。
+
+    ```javascript
+    // bad
+    const arr = [
+      [0, 1], [2, 3], [4, 5],
+    ];
+
+    const objectInArray = [{
+      id: 1,
+    }, {
+      id: 2,
+    }];
+
+    const numberInArray = [
+      1, 2,
+    ];
+
+    // good
+    const arr = [[0, 1], [2, 3], [4, 5]];
+
+    const objectInArray = [
+      {
+        id: 1,
+      },
+      {
+        id: 2,
+      },
+    ];
+
+    const numberInArray = [
+      1,
+      2,
+];
     ```
 
 **[⬆ 回到頂端](#table-of-contents)**
@@ -993,7 +1049,7 @@
 
 **[⬆ 回到頂端](#table-of-contents)**
 
-<a name="constructors"></a>
+<a name="classes--constructors"></a>
 ## 建構子
 
   - [9.1](#9.1) <a name='9.1'></a> 總是使用 `class`。避免直接操作 `prototype`。
@@ -3289,7 +3345,7 @@
   - [28.1](#28.1) <a name='28.1'></a> 以下是連結到各個 ES6 特性的列表。
 
   1. [箭頭函式](#arrow-functions)
-  1. [類別](#constructors)
+  1. [類別及建構子](#classes--constructors)
   1. [物件簡寫](#es6-object-shorthand)
   1. [簡潔物件](#es6-object-concise)
   1. [可計算的物件屬性](#es6-computed-properties)
