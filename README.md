@@ -484,7 +484,7 @@
 <a name="destructuring"></a>
 ## 解構子
 
-  - [5.1](#5.1) <a name='5.1'></a> 從一個物件中存取或使用的其多個屬性時，請使用物件解構子。eslint: [`prefer-destructuring`](https://eslint.org/docs/rules/prefer-destructuring)
+  - [5.1](#5.1) <a name='5.1'></a> 從一個物件中存取或使用其多個屬性時，請使用物件解構子。eslint: [`prefer-destructuring`](https://eslint.org/docs/rules/prefer-destructuring)
 
     > 為什麼？因為解構子不但能使你不用為那些屬性建立暫時的參考，而且能避免反覆存取物件的重複代碼導致閱讀效率的降低和出錯率的上升。此外，解構物件也提供了一個地方來定義程式區塊中會使用到的物件內容，而不需要閱讀整個程式區塊來確認哪些物件內容被使用了
 
