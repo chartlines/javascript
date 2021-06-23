@@ -484,9 +484,9 @@
 <a name="destructuring"></a>
 ## 解構子
 
-  - [5.1](#5.1) <a name='5.1'></a> 存取或使用有多個屬性的物件時，請使用物件解構子。eslint: [`prefer-destructuring`](https://eslint.org/docs/rules/prefer-destructuring)
+  - [5.1](#5.1) <a name='5.1'></a> 從一個物件中存取或使用的其多個屬性時，請使用物件解構子。eslint: [`prefer-destructuring`](https://eslint.org/docs/rules/prefer-destructuring)
 
-    > 為什麼？因為解構子能夠節省你對這些屬性建立暫時的參考。
+    > 為什麼？因為解構子不但能使你不用為那些屬性建立暫時的參考，而且能避免反覆存取物件的重複代碼導致閱讀效率的降低和出錯率的上升。此外，解構物件也提供了一個地方來定義程式區塊中會使用到的物件內容，而不需要閱讀整個程式區塊來確認哪些物件內容被使用了
 
     ```javascript
     // bad
@@ -553,19 +553,22 @@
 ## 字串
 
   - [6.1](#6.1) <a name='6.1'></a> 字串請使用單引號 `''`。eslint: [`quotes`](http://eslint.org/docs/rules/quotes.html) 
-  
+
     ```javascript
     // bad
     const name = "Capt. Janeway";
+
+    // bad - template literals should contain interpolation or newlines
+    const name = `Capt. Janeway`;
 
     // good
     const name = 'Capt. Janeway';
     ```
 
   <a name='strings--line-length'></a>
-  - [6.2](#6.2) <a name='6.2'></a> 如果字串超過 100 個字元，請使用字串連接符號換行。
+  - [6.2](#6.2) <a name='6.2'></a> 如果字串超過 100 個字元，不應該使用字串連接符號來使其跨越多行。
 
-    > 為什麼？處理割裂開的字串讓人很痛苦，而且會降低程式的可搜索性
+    > 為什麼？處理斷裂的字串不僅讓人很痛苦，而且會降低程式的可搜索性
 
     ```javascript
     // bad
