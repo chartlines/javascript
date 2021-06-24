@@ -633,9 +633,9 @@
 <a name="functions"></a>
 ## 函式
 
-  - [7.1](#7.1) <a name='7.1'></a> 使用命名的函式陳述式，取代函式運算式。
+  - [7.1](#7.1) <a name='7.1'></a> 使用命名的函式表達式而非函式宣告。eslint: [`func-style`](https://eslint.org/docs/rules/func-style)
 
-    > 為什麼？Function declarations are hoisted, which means that it’s easy - too easy - to reference the function before it is defined in the file. This harms readability and maintainability. If you find that a function’s definition is large or complex enough that it is interfering with understanding the rest of the file, then perhaps it’s time to extract it to its own module! Don’t forget to explicitly name the expression, regardless of whether or not the name is inferred from the containing variable (which is often the case in modern browsers or when using compilers such as Babel). This eliminates any assumptions made about the Error's call stack. ([Discussion](https://github.com/airbnb/javascript/issues/794))
+    > 為什麼？函式宣告會被提升，這意味著引用函式變得太容易了，即使在文件中定義該函式之前引用也能成立。這不利於可讀性和可維護性。如果您发現一個函數的定義內容過大或太覆雜，以至於影響了對文件其余部分的理解，那麽也許是時候該將它自身提取成一個模組了!不要忘記顯式地命名表達式，不管名稱是否是從此函式所賦值的變數聯想而來的(這在現在的瀏覽器或使用諸如Babel這樣的編譯器時經常發生)。這消除了任何基於Error的呼叫堆疊的假設。([Discussion](https://github.com/airbnb/javascript/issues/794))
 
     ```javascript
     // bad
@@ -655,18 +655,18 @@
     };
     ```
 
-  - [7.2](#7.2) <a name='7.2'></a> 立即函式就是立即函式，不要使用函式陳述式。eslint: [`wrap-iife`](http://eslint.org/docs/rules/wrap-iife.html) jscs: [`requireParenthesesAroundIIFE`](http://jscs.info/rule/requireParenthesesAroundIIFE)
+  - [7.2](#7.2) <a name='7.2'></a> 將立即調用的函數表達式用括號括起來。eslint: [`wrap-iife`](http://eslint.org/docs/rules/wrap-iife.html)
 
-    > 為什麼？一個立即函式是個獨立的單元－將函式及呼叫函式的括號包起來明確表示這一點。注意在模組世界的任何地方，你都不需要使用立即函式。
+    > 為什麼？一個立即函式是個獨立的單元－將函式及呼叫函式的括號包起來明確表示這一點。請注意，在一個到處都是模組的世界中，您幾乎不需要用到立即函式。
 
     ```javascript
-    // 立即函式（IIFE）
+    // immediately-invoked function expression (IIFE)
     (function () {
       console.log('Welcome to the Internet. Please follow me.');
     }());
     ```
 
-  - [7.3](#7.3) <a name='7.3'></a> 絕對不要在非函式的區塊（if、while 等等）宣告函式。你可以將函式賦予至變數解決這個問題。瀏覽器會允許你這麼做，但不同瀏覽器產生的結果可能會不同。eslint: [`no-loop-func`](http://eslint.org/docs/rules/no-loop-func.html)
+  - [7.3](#7.3) <a name='7.3'></a> 絕對不要在非函式的區塊（`if`、`while` 等等）宣告函式，而應該指派函式給一個變數。瀏覽器會允許你這麼做，但不同瀏覽器產生的結果可能會不同。eslint: [`no-loop-func`](http://eslint.org/docs/rules/no-loop-func.html)
 
   - [7.4](#7.4) <a name='7.4'></a> **注意：**ECMA-262 將`區塊`定義為陳述式。函式宣告則不是陳述式。[閱讀 ECMA-262 關於這個問題的說明](http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf#page=97)。
 
@@ -687,7 +687,7 @@
     }
     ```
 
-  - [7.5](#7.5) <a name='7.5'></a> 請勿將參數命名為 `arguments`，這樣會將覆蓋掉函式作用域傳來的 `arguments`。
+  - [7.5](#7.5) <a name='7.5'></a> 請勿將參數命名為 `arguments`，這樣將會覆蓋掉给每个函式作用域的`arguments`物件。
 
     ```javascript
     // bad
@@ -702,7 +702,7 @@
     ```
 
   <a name='es6-rest'></a>
-  - [7.6](#7.6) <a name='7.6'></a> 絕對不要使用 `arguments`，可以選擇使用 rest 語法 `...` 替代。[`prefer-rest-params`](http://eslint.org/docs/rules/prefer-rest-params)
+  - [7.6](#7.6) <a name='7.6'></a> 絕對不要使用 `arguments`，可以選擇使用其餘語法 `...` 替代。eslint: [`prefer-rest-params`](http://eslint.org/docs/rules/prefer-rest-params)
 
     > 為什麼？使用 `...` 能夠明確指出你要將參數傳入哪個變數。再加上 rest 參數是一個真正的陣列，而不像 `arguments` 似陣列而非陣列。
 
@@ -762,7 +762,7 @@
     count();  // 3
     ```
 
-  - [7.9](#7.9) <a name='7.9'></a> 永遠將預設參數放置於最後。
+  - [7.9](#7.9) <a name='7.9'></a> 永遠將預設參數放置於最後。eslint:[`default-param-last`](https://eslint.org/docs/rules/default-param-last)
 
     ```javascript
     // bad
@@ -776,7 +776,7 @@
     }
     ```
 
-  - [7.10](#7.10) <a name='7.9'></a> 千萬別使用建構函式去建立一個新的函式。eslint: [`no-new-func`](https://eslint.org/docs/rules/no-new-func)
+  - [7.10](#7.10) <a name='7.10'></a> 千萬別使用建構函式去建立一個新的函式。eslint: [`no-new-func`](https://eslint.org/docs/rules/no-new-func)
 
     > 為什麼？透過這種方式建立一個函數來計算字串類似於 `eval()`，會造成許多的漏洞。
 
@@ -788,7 +788,7 @@
     var subtract = Function('a', 'b', 'return a - b');
     ```
 
-  - [7.11](#7.11) <a name="7.11"></a> 在函式的標示後放置空格。eslint: [`space-before-function-paren`](https://eslint.org/docs/rules/space-before-function-paren)[`space-before-blocks`](https://eslint.org/docs/rules/space-before-blocks)
+  - [7.11](#7.11) <a name="7.11"></a> 在函式簽名前後放置空格。eslint: [`space-before-function-paren`](https://eslint.org/docs/rules/space-before-function-paren)[`space-before-blocks`](https://eslint.org/docs/rules/space-before-blocks)
 
     > 為什麼？一致性較好，而且你不應該在新增或刪除名稱時增加或減少空格。
 
@@ -827,23 +827,27 @@
     // bad
     function f1(a) {
       a = 1;
+      // ...
     }
 
     function f2(a) {
       if (!a) { a = 1; }
+      // ...
     }
 
     // good
     function f3(a) {
       const b = a || 1;
+      // ...
     }
 
     function f4(a = 1) {
+      // ...
     }
     ```
 
   - [7.14](#7.14) <a name='7.14'></a> 推薦用擴展運算子(spread operator) `...` 呼叫可變參數函式(variadic functions)。eslint: [`prefer-spread`](https://eslint.org/docs/rules/prefer-spread)
-    > 為什麼？它很簡潔，你不需要再多加其他內容。you can not easily compose `new` with `apply`.
+    > 為什麼？它很簡潔，你不需要再多加其他內容，而且雖然你無法簡單地將`new`與`apply`搭配使用，但是使用擴展運算子可以做到。
 
     ```javascript
     // bad
@@ -861,7 +865,7 @@
     new Date(...[2016, 8, 5]);
     ```
 
-  - [7.15(#7.15)] <a name='7.15'></a> 函式有個參數或是呼叫時，應該讓每一個都獨立一行存在，並在最後一個的末尾處也帶上逗號。eslint: [`function-paren-newline`](https://eslint.org/docs/rules/function-paren-newline)
+  - [7.15](#7.15) <a name='7.15'></a> 多行函式簽名或多行函式呼叫時，應該像該指南中每個其他的多行列表一樣，每個項目都自己獨立一行存在，且在最後一個項目的末尾處帶上逗號。eslint: [`function-paren-newline`](https://eslint.org/docs/rules/function-paren-newline)
 
     ```javascript
     // bad
