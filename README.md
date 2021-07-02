@@ -847,6 +847,7 @@
     ```
 
   - [7.14](#7.14) <a name='7.14'></a> 推薦用擴展運算子(spread operator) `...` 呼叫可變參數函式(variadic functions)。eslint: [`prefer-spread`](https://eslint.org/docs/rules/prefer-spread)
+
     > 為什麼？它很簡潔，你不需要再多加其他內容，而且雖然你無法簡單地將`new`與`apply`搭配使用，但是使用擴展運算子可以做到。
 
     ```javascript
@@ -902,11 +903,11 @@
 <a name="arrow-functions"></a>
 ## 箭頭函式
 
-  - [8.1](#8.1) <a name='8.1'></a> 當你必須使用函式表達式（或傳遞一個匿名函式）時，請使用箭頭函式的符號。eslint: [`prefer-arrow-callback`](http://eslint.org/docs/rules/prefer-arrow-callback.html), [`arrow-spacing`](http://eslint.org/docs/rules/arrow-spacing.html)
+  - [8.1](#8.1) <a name='8.1'></a> 當你必須使用匿名函式（如傳遞一個內嵌回調函式）時，請使用箭頭函式標示。eslint: [`prefer-arrow-callback`](http://eslint.org/docs/rules/prefer-arrow-callback.html), [`arrow-spacing`](http://eslint.org/docs/rules/arrow-spacing.html)
 
-    > 為什麼？它會在有 `this` 的內部建立了一個新版本的函式，通常功能都是你所想像的，而且語法更為簡潔。
+    > 為什麼？它會建立一個使用上下文`this`作為自身`this`的變體函式，這不僅是我們通常所希望的，而且語法上更為簡潔。
 
-    > 為什麼不？如果你已經有一個相當複雜的函式時，或許你該將邏輯都移到一個函式宣告上。
+    > 為什麼不？如果你已經有一個相當複雜的函式時，或許你該將邏輯都移到有他自己的名字的函式表達式。
 
     ```javascript
     // bad
@@ -922,19 +923,19 @@
     });
     ```
 
-  - [8.2](#8.2) <a name='8.2'></a> 如果函式內容只有單一敘述，且返回一個沒有副作用的陳述式，你可以很隨性的省略大括號及隱藏回傳。否則請保留大括號並使用 `return` 語法。eslint: [`arrow-parens`](http://eslint.org/docs/rules/arrow-parens.html), [`arrow-body-style`](http://eslint.org/docs/rules/arrow-body-style.html)
+  - [8.2](#8.2) <a name='8.2'></a> 如果函式內容只有單一陳述句，且返回一個沒有副作用的[表達式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#expressions)，請省略大括號及使用隱式回傳。否則請保留大括號並使用 `return` 陳述。eslint: [`arrow-parens`](http://eslint.org/docs/rules/arrow-parens.html), [`arrow-body-style`](http://eslint.org/docs/rules/arrow-body-style.html)
 
-    > 為什麼？因為這是語法糖。這樣能夠在多個函式鏈結在一起的時候更易讀。
+    > 為什麼？因為這是語法糖。當多個函式串連在一起時會更容易閱讀。
 
     ```javascript
     // bad
-    [1, 2, 3].map(number => {
+    [1, 2, 3].map((number) => {
       const nextNumber = number + 1;
       `A string containing the ${nextNumber}.`;
     });
 
     // good
-    [1, 2, 3].map(number => `A string containing the ${number}.`);
+    [1, 2, 3].map((number) => `A string containing the ${number + 1}.`);
 
     // good
     [1, 2, 3].map((number) => {
@@ -968,9 +969,9 @@
 
   - [8.3](#8.3) <a name='8.3'></a> 如果表達式跨了多行，請將它們包在括號中增加可讀性。
 
-    > 為什麼？這麼做更清楚的表達函式的開始與結束的位置。
+    > 為什麼？這麼做更清楚的呈現函式的開始與結束的位置。
 
-    ```js
+    ```javascript
     // bad
     ['get', 'post', 'put'].map(httpMethod => Object.prototype.hasOwnProperty.call(
         httpMagicObjectWithAVeryLongName,
@@ -988,20 +989,25 @@
     ```
 
 
-  - [8.4](#8.4) <a name='8.4'></a> 如果你的函式只使用一個參數，那麼可以很隨意的省略括號。否則請在參數兩側加上括號。當然，也可以總是在參數兩側加上括號。讓兩側總是有括號的eslint設置如後所示。eslint: [`arrow-parens`](http://eslint.org/docs/rules/arrow-parens.html)
-    > 為什麼？減少視覺上的混亂。
+  - [8.4](#8.4) <a name='8.4'></a> 為了清晰明瞭和一致性，請永遠在參數的周圍加上括號。eslint: [`arrow-parens`](http://eslint.org/docs/rules/arrow-parens.html)
 
-    ```js
+    > 為什麼？當遇到新增和移除參數的情況時，能減少視覺上的混亂。
+
+    ```javascript
     // bad
-    [1, 2, 3].map((x) => x * x);
-
-    // good
     [1, 2, 3].map(x => x * x);
 
     // good
+    [1, 2, 3].map((x) => x * x);
+
+    // bad
     [1, 2, 3].map(number => (
-      `A long string with the ${number}. It’s so long that we’ve broken it ` +
-      'over multiple lines!'
+      `A long string with the ${number}. It’s so long that we don’t want it to take up space on the .map line!`
+    ));
+
+    // good
+    [1, 2, 3].map((number) => (
+      `A long string with the ${number}. It’s so long that we don’t want it to take up space on the .map line!`
     ));
 
     // bad
@@ -1017,7 +1023,7 @@
     });
     ```
 
-  - [8.5](#8.5) <a name='8.5'></a> 避免混淆箭頭函式語法（`=>`）及比較運算子（`<=`、`>=`）。eslint: [`no-confusing-arrow`](http://eslint.org/docs/rules/no-confusing-arrow)
+  - [8.5](#8.5) <a name='8.5'></a> 避免混淆箭頭函式語法（`=>`）及比較運算子（`<=`，`>=`）。eslint: [`no-confusing-arrow`](http://eslint.org/docs/rules/no-confusing-arrow)
 
     ```js
     // bad
@@ -1037,7 +1043,7 @@
     ```
 
   <a name="whitespace--implicit-arrow-linebreak"></a>
-  - [8.6](#whitespace--implicit-arrow-linebreak) 當箭頭函式隱式調用return時，函式體需要用括號包起來。eslint: [`implicit-arrow-linebreak`](https://eslint.org/docs/rules/implicit-arrow-linebreak)
+  - [8.6](#whitespace--implicit-arrow-linebreak) 當箭頭函式隱式回傳時，請控制箭頭函式的位置。eslint: [`implicit-arrow-linebreak`](https://eslint.org/docs/rules/implicit-arrow-linebreak)
 
     ```js
     // bad
@@ -1057,7 +1063,7 @@
 **[⬆ 回到頂端](#table-of-contents)**
 
 <a name="classes--constructors"></a>
-## 建構子
+## 類別 & 建構子
 
   - [9.1](#9.1) <a name='9.1'></a> 總是使用 `class`。避免直接操作 `prototype`。
 
@@ -1066,23 +1072,22 @@
     ```javascript
     // bad
     function Queue(contents = []) {
-      this._queue = [...contents];
+      this.queue = [...contents];
     }
     Queue.prototype.pop = function () {
-      const value = this._queue[0];
-      this._queue.splice(0, 1);
+      const value = this.queue[0];
+      this.queue.splice(0, 1);
       return value;
-    }
-
+    };
 
     // good
     class Queue {
       constructor(contents = []) {
-        this._queue = [...contents];
+        this.queue = [...contents];
       }
       pop() {
-        const value = this._queue[0];
-        this._queue.splice(0, 1);
+        const value = this.queue[0];
+        this.queue.splice(0, 1);
         return value;
       }
     }
@@ -1090,7 +1095,7 @@
 
   - [9.2](#9.2) <a name='9.2'></a> 使用 `extends` 繼承。
 
-    > 為什麼？因為他是一個內建繼承原型方法的方式，且不會破壞 `instanceof`。
+    > 為什麼？因為這是一個原生繼承原型方法的方式，且不會破壞 `instanceof`。
 
     ```javascript
     // bad
@@ -1100,18 +1105,18 @@
     }
     inherits(PeekableQueue, Queue);
     PeekableQueue.prototype.peek = function () {
-      return this._queue[0];
-    }
+      return this.queue[0];
+    };
 
     // good
     class PeekableQueue extends Queue {
       peek() {
-        return this._queue[0];
+        return this.queue[0];
       }
     }
     ```
 
-  - [9.3](#9.3) <a name='9.3'></a> 方法可以回傳 `this` 幫助方法之間進行鏈結。
+  - [9.3](#9.3) <a name='9.3'></a> 方法可以回傳 `this` 來實現方法鏈。
 
     ```javascript
     // bad
@@ -1148,7 +1153,7 @@
     ```
 
 
-  - [9.4](#9.4) <a name='9.4'></a> 可以寫一個 `toString()` 的方法，但是請確保它可以正常執行且沒有函式副作用。
+  - [9.4](#9.4) <a name='9.4'></a> 可以寫一個慣例的 `toString()` 的方法，但是請確保它可以正常執行且沒有函式副作用。
 
     ```javascript
     class Jedi {
@@ -1166,7 +1171,7 @@
     }
     ```
 
-  - [*9.5](#9.5) <a name='9.5'></a> 若類別沒有指定建構子，那它會擁有預設的建構子。一個空的建構子函式或是只委派給父類別的函式是不必要的。[`no-useless-constructor`](http://eslint.org/docs/rules/no-useless-constructor)(todo)
+  - [*9.5](#9.5) <a name='9.5'></a> 若類別沒有指定建構子，那它會擁有預設的建構子。一個空的建構子函式或是只委派給父類別的函式是不必要的。 eslint: [`no-useless-constructor`](http://eslint.org/docs/rules/no-useless-constructor)
 
     ```javascript
     // bad
@@ -1193,9 +1198,11 @@
       }
     }
     ```
+
 - [9.6](#9.6) <a name='9.6'></a> 避免出現完全一樣的類別成員。eslint: [`no-dupe-class-members`](https://eslint.org/docs/rules/no-dupe-class-members)
+
   > 為什麼？完全一樣的類別成員只有最後一次宣告的是有效的。有完全一樣的成員基本上已經能稱為是一個bug了。
-   
+
   ```javascript
   // bad
   class Foo {
@@ -1211,6 +1218,37 @@
   // good
   class Foo {
     bar() { return 2; }
+  }
+  ```
+- [9.7](#9.7) <a name='9.7'></a> class方法應該使用`this`或是放置於static方法中，除非某個外部的函式庫或框架要求使用特定的非static方法。因為作為一個實例方法，應該表明它的行為會根據接收方的屬性而有所不同。eslint: [`lass-methods-use-this`](https://eslint.org/docs/rules/class-methods-use-this)
+
+  ```javascript
+  // bad
+  class Foo {
+    bar() {
+      console.log('bar');
+    }
+  }
+
+  // good - this is used
+  class Foo {
+    bar() {
+      console.log(this.bar);
+    }
+  }
+
+  // good - constructor is exempt
+  class Foo {
+    constructor() {
+      // ...
+    }
+  }
+
+  // good - static methods aren't expected to use this
+  class Foo {
+    static bar() {
+      console.log('bar');
+    }
   }
   ```
 
@@ -1263,10 +1301,10 @@
     import { es6 } from './AirbnbStyleGuide';
     export default es6;
     ```
-  
-  - [10.4](#10.4) <a name='10.4'></a> 同一個路徑在同一個地方只會引入一次。eslint: [`no-duplicate-imports`](https://eslint.org/docs/rules/no-duplicate-imports)
 
-    > 為什麼？在多行下引入對同一個路徑進行引入會讓程式難以維護
+  - [10.4](#10.4) <a name='10.4'></a> 將同一個路徑的引入集中在同一個地方。eslint: [`no-duplicate-imports`](https://eslint.org/docs/rules/no-duplicate-imports)
+
+    > 為什麼？對同一個路徑的引入分散成多行會讓程式難以維護
 
     ```javascript
     // bad
@@ -1284,10 +1322,9 @@
     } from 'foo';
     ```
 
-
   - [10.5](#10.5) <a name='10.5'></a> 不要導出可變的繫結（綁定）。eslint: [`import/no-mutable-exports`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-mutable-exports.md)
 
-    > 為什麼？一般會盡量避免變數的存在，尤其是在導出變數這塊。可能這種做法在一些特殊的情況下會被用到，但通常來說，只有常數才能被導出。
+    > 為什麼？一般會盡量避免變數的存在，尤其是在導出變數這塊。可能這種做法在一些特殊的情況下會被用到，但通常來說，只有常數才應該被導出。
 
     ```javascript
     // bad
@@ -1298,7 +1335,9 @@
     const foo = 3;
     export { foo };
     ```
+
   - [10.6](#10.6) <a name='10.6'></a> 如果模組中只有一個導出，相比去命名導出的模組，不如直接設為default。eslint: [`import/prefer-default-export`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/prefer-default-export.md)
+
     > 為什麼？這樣能鼓勵更多的文件只往外導出一個東西，讓整個項目更具可讀性和可維護性。
 
     ```javascript
@@ -1310,7 +1349,8 @@
     ```
 
   - [10.7](#10.7) <a name='10.7'></a> 把所有的 `import` 置於頂部。eslint: [`import/first`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/first.md)
-    > 為什麼？因為`import`會被[提升(hoisted)](https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting)，將它們保持在頂部能防止一些意外的行為
+
+    > 為什麼？因為`import`會被提升，將它們保持在頂部能防止一些意外的行為
 
     ```javascript
     // bad
@@ -1325,9 +1365,10 @@
 
     foo.init();
     ```
-  
-  - [10.8](#10.8) <a name='10.8'></a> 多項的引入應該寫成像多行的陣列和物件字面量
-    > 為什麼？The curly braces follow the same indentation rules as every other curly brace block in the style guide, as do the trailing commas.
+
+  - [10.8](#10.8) <a name='10.8'></a> 多行的引入應該像多行的陣列和物件字面量那樣縮排
+
+    > 為什麼?在樣式指南中，大括號遵循與其他大括號區塊相同的縮進規則，末尾的逗號也是如此。
 
     ```javascript
     // bad
@@ -1344,7 +1385,8 @@
     ```
 
   - [10.9](#10.9) <a name='10.9'></a> 不允許在模組的引入陳述中用Webpack loader的語法。eslint: [`import/no-webpack-loader-syntax`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-webpack-loader-syntax.md)
-    > 為什麼？Since using Webpack syntax in the imports couples the code to a module bundler. Prefer using the loader syntax in `webpack.config.js`
+
+    > 為什麼？因為在引入中使用Webpack語法會將代碼耦合到模組捆綁器中。所以寧可選擇在`webpack.config.js`中使用載入語法。
 
     ```javascript
     // bad
@@ -1356,16 +1398,32 @@
     import barCss from 'bar.css';
     ```
 
+  - [10.10](#10.10) <a name='10.10'></a> 不要包含JavaSciprt文件擴展名。eslint: [`import/extensions`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/extensions.md)
+
+    > 為什麼？包含擴展名會妨礙重構，並且要寫出每個引入的模組的執行地址細節
+
+    ```javascript
+    // bad
+    import foo from './foo.js';
+    import bar from './bar.jsx';
+    import baz from './baz/index.jsx';
+
+    // good
+    import foo from './foo';
+    import bar from './bar';
+    import baz from './baz';
+    ```
+
 **[⬆ 回到頂端](#table-of-contents)**
 
 <a name="iterators-and-generators"></a>
 ## 迭代器及產生器
 
-  - [11.1](#11.1) <a name='11.1'></a> 不要使用迭代器。更好的做法是使用 JavaScript 的高階函式，像是 `map()` 及 `reduce()`，替代如 `for-of ` 的迴圈語法。eslint: [`no-iterator`](http://eslint.org/docs/rules/no-iterator.html) [`no-restricted-syntax`](https://eslint.org/docs/rules/no-restricted-syntax)
+  - [11.1](#11.1) <a name='11.1'></a> 不要使用迭代器。更好的做法是使用 JavaScript 的高階函式，而非如`for-in`或`for-of`的迴圈語法。eslint: [`no-iterator`](http://eslint.org/docs/rules/no-iterator.html) [`no-restricted-syntax`](https://eslint.org/docs/rules/no-restricted-syntax)
 
-    > 為什麼？這加強了我們不變的規則。處理純函式的回傳值讓程式碼更易讀，勝過它所造成的函式副作用。
+    > 為什麼？堅持我們一直以來的規則。處理純函式的回傳值比去推敲副作用簡單得多
 
-    > 用 `map()` / `every()` / `filter()` / `find()` / `findIndex()` / `reduce()` / `some()` /...來迭代陣列，用 `Object.keys()` / `Object.values()` / `Object.entries()` 來產生陣列，這樣你也能迭代物件了。
+    > 用 `map()` / `every()` / `filter()` / `find()` / `findIndex()` / `reduce()` / `some()` /...來迭代陣列，用 `Object.keys()` / `Object.values()` / `Object.entries()` 來產生陣列，這樣你就能迭代物件了。
 
     ```javascript
     const numbers = [1, 2, 3, 4, 5];
@@ -1375,15 +1433,16 @@
     for (let num of numbers) {
       sum += num;
     }
-
     sum === 15;
 
     // good
     let sum = 0;
-    numbers.forEach(num => sum += num);
+    numbers.forEach((num) => {
+      sum += num;
+    });
     sum === 15;
 
-    // best (使用 javascript 的高階函式)
+    // best (use the functional force)
     const sum = numbers.reduce((total, num) => total + num, 0);
     sum === 15;
 
@@ -1400,16 +1459,16 @@
     });
 
     // best (keeping it functional)
-    const increasedByOne = numbers.map(num => num + 1);
+    const increasedByOne = numbers.map((num) => num + 1);
     ```
 
   - [11.2](#11.2) <a name='11.2'></a> 現在還不要使用產生器。
 
-    > 為什麼？因為它現在編譯至 ES5 還沒有編譯得非常好。
+    > 為什麼？因為它們不能很好地編譯至 ES5。
 
-  - [11.3](#11.3) <a name='11.3'></a> 如果你必須要用產生器，或是你無視了我們的建議，那至少確保它們的[函數簽名](https://developer.mozilla.org/zh-CN/docs/Glossary/Signature/Function)中的空格是正確的。
-  
-    > 為什麼？ `function` 和 `*` 在概念上是一個關鍵字。 `*`不是要修飾 `function` 的。 `function*` 是一個唯一存在的建構子，它不同於 `function`。
+  - [11.3](#11.3) <a name='11.3'></a> 如果你必須要用產生器，或是你無視了我們的建議，那至少確保它們的函數簽名有被正確的間隔。
+
+    > 為什麽?`Function`和`*`是相同概念關鍵字的一部分- `*`不是`Function`的修飾語，`Function*`是一個獨特的結構，不同於`Function`。
 
     ```javascript
     // bad
@@ -1472,7 +1531,7 @@
 <a name="properties"></a>
 ## 屬性
 
-  - [12.1](#12.1) <a name='12.1'></a> 使用點 `.` 來存取屬性。eslint: [`dot-notation`](http://eslint.org/docs/rules/dot-notation.html) jscs: [`requireDotNotation`](http://jscs.info/rule/requireDotNotation)
+  - [12.1](#12.1) <a name='12.1'></a> 使用點標示來存取屬性。eslint: [`dot-notation`](http://eslint.org/docs/rules/dot-notation.html)
 
     ```javascript
     const luke = {
@@ -1487,7 +1546,7 @@
     const isJedi = luke.jedi;
     ```
 
-  - [12.2](#12.2) <a name='12.2'></a> 需要帶參數存取屬性時請使用中括號 `[]`。
+  - [12.2](#12.2) <a name='12.2'></a> 以變數方式來存取屬性時請使用中括號 `[]`。
 
     ```javascript
     const luke = {
@@ -1503,7 +1562,7 @@
     ```
 
   <a name='exponentiation-operator'></a>
-  - [12.3](#12.3) <a name='12.3'></a> 計算乘方時，用乘方運算子 `**` 。eslit: [`no-restricted-properties`](https://eslint.org/docs/rules/no-restricted-properties)
+  - [12.3](#12.3) <a name='12.3'></a> 計算乘方時，用乘方運算子`**`。eslit: [`no-restricted-properties`](https://eslint.org/docs/rules/no-restricted-properties)
 
     ```javascript
     // bad
